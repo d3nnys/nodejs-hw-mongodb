@@ -29,7 +29,7 @@ const setupServer = () => {
 
   app.get('/contacts/:id', async (req, res) => {
     const { id } = req.params;
-    const contactId = await contactServices.getMovieById(id);
+    const contactId = await contactServices.getContactById(id);
 
     if (!contactId) {
       return res.status(404).json({
