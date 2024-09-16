@@ -18,20 +18,20 @@ const setupServer = () => {
   app.use(express.json());
 
   app.get('/contacts', async (req, res) => {
-    const contacts = await contactServices.getAllContacts();
+    const data = await contactServices.getAllContacts();
 
     res.json({
       status: 200,
       message: 'Successfully found contacts!',
-      contacts,
+      data,
     });
   });
 
   app.get('/contacts/:id', async (req, res) => {
     const { id } = req.params;
-    const contactId = await contactServices.getContactById(id);
+    const data = await contactServices.getContactById(id);
 
-    if (!contactId) {
+    if (!data) {
       return res.status(404).json({
         message: 'Contact not found',
       });
@@ -39,8 +39,8 @@ const setupServer = () => {
 
     res.json({
       status: 200,
-      message: `Successfully found contact with id ${contactId}!`,
-      contactId,
+      message: `Successfully found contact with id ${id}!`,
+      data,
     });
   });
 
