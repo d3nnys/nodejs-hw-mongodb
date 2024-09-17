@@ -23,7 +23,7 @@ const setupServer = () => {
     res.json({
       status: 200,
       message: 'Successfully found contacts!',
-      data,
+      data: data,
     });
   });
 
@@ -40,7 +40,7 @@ const setupServer = () => {
     res.json({
       status: 200,
       message: `Successfully found contact with id ${id}!`,
-      data,
+      data: data,
     });
   });
 
