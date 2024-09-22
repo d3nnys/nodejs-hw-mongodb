@@ -22,4 +22,9 @@ contactsRouter.patch(
   ctrlWrapper(contactController.patchContactController),
 );
 
+contactsRouter.delete(
+  '/:id',
+  ctrlWrapper(contactController.deleteMovieController),
+);
+
 export default contactsRouter;

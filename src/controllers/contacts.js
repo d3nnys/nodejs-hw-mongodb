@@ -42,24 +42,33 @@ export const upsertContactController = async (req, res) => {
     req.body,
   );
 
-  if (!data) throw createHttpError(404, `Contact not found`);
-
   const status = isNew ? 201 : 200;
 
   res.json(status)({
     status: 200,
-    message: 'Successfully patched a contact!',
+    message: 'Successfully upserted a contact!',
     data: data.message,
   });
 };
 
 export const patchContactController = async (req, res) => {
   const { id } = req.params;
-  const { data } = contactServices.updateContact({ _id: id }, req.body);
+  const result = contactServices.updateContact({ _id: id }, req.body);
+
+  if (!result) throw createHttpError(404, `Contact not found`);
 
   res.json(200)({
     status: 200,
     message: 'Successfully patched a contact!',
-    data: data.message,
+    data: result.message,
   });
+};
+
+export const deleteMovieController = async (req, res) => {
+  const { id } = req.params;
+  const data = await contactServices.deleteContact({ _id: id });
+
+  if (!data) throw createHttpError(404, `Contact not found`);
+
+  res.status(204).send;
 };
