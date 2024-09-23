@@ -12,7 +12,9 @@ contactsRouter.get(
   '/:id',
   ctrlWrapper(contactController.getContactByIdController),
 );
+
 contactsRouter.post('/', ctrlWrapper(contactController.addContactController));
+
 contactsRouter.put(
   '/:id',
   ctrlWrapper(contactController.upsertContactController),
@@ -24,7 +26,7 @@ contactsRouter.patch(
 
 contactsRouter.delete(
   '/:id',
-  ctrlWrapper(contactController.deleteMovieController),
+  ctrlWrapper(contactController.deleteContactController),
 );
 
 export default contactsRouter;
