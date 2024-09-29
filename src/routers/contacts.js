@@ -1,6 +1,12 @@
 import { Router } from 'express';
+import {
+  contactAddSchema,
+  contactPatchSchema,
+} from '../validation/contacts.js';
 import * as contactController from '../controllers/contacts.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
+import validateBody from '../utils/validateBody.js';
+import isValidId from '../middlewares/isValidId.js';
 
 const contactsRouter = Router();
 
@@ -10,21 +16,33 @@ contactsRouter.get(
 );
 contactsRouter.get(
   '/:id',
+  isValidId,
   ctrlWrapper(contactController.getContactByIdController),
 );
-contactsRouter.post('/', ctrlWrapper(contactController.addContactController));
+
+contactsRouter.post(
+  '/',
+  validateBody(contactAddSchema),
+  ctrlWrapper(contactController.addContactController),
+);
+
 contactsRouter.put(
   '/:id',
+  isValidId,
+  validateBody(contactAddSchema),
   ctrlWrapper(contactController.upsertContactController),
 );
 contactsRouter.patch(
   '/:id',
+  isValidId,
+  validateBody(contactPatchSchema),
   ctrlWrapper(contactController.patchContactController),
 );
 
 contactsRouter.delete(
   '/:id',
-  ctrlWrapper(contactController.deleteMovieController),
+  isValidId,
+  ctrlWrapper(contactController.deleteContactController),
 );
 
 export default contactsRouter;
