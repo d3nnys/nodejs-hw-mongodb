@@ -8,7 +8,7 @@ const isValidId = async (req, res, next) => {
     return next(createHttpError(404, `${id} not valid id`));
   }
 
-  return;
+  next();
 };
 
 export default isValidId;
