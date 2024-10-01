@@ -8,7 +8,7 @@ const validateBody = (contactAddSchema) => {
       });
       next();
     } catch (error) {
-      const validateError = createHttpError(400, error.message);
+      const validateError = createHttpError(400, `${error.message}`);
       next(validateError);
     }
   };

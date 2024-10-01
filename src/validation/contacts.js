@@ -13,8 +13,8 @@ export const contactAddSchema = Joi.object({
     'string.min': `"email" should have at least {#limit} characters`,
     'string.max': `"email" should have at most {#limit} characters`,
   }),
-  isFavorite: Joi.boolean().messages({
-    'boolean.base': `"isFavorite" should be a boolean value (true or false)`,
+  isFavourite: Joi.boolean().messages({
+    'boolean.base': `"isFavourite" should be a boolean value (true or false)`,
   }),
   phoneNumber: Joi.string().min(3).max(20).required().messages({
     'string.base': `"phoneNumber" should be a type of 'text'`,
@@ -49,8 +49,8 @@ export const contactPatchSchema = Joi.object({
     'string.min': `"email" should have at least {#limit} characters`,
     'string.max': `"email" should have at most {#limit} characters`,
   }),
-  isFavorite: Joi.boolean().messages({
-    'boolean.base': `"isFavorite" should be a boolean value (true or false)`,
+  isFavourite: Joi.boolean().messages({
+    'boolean.base': `"isFavourite" should be a boolean value (true or false)`,
   }),
   phoneNumber: Joi.string().min(3).max(20).messages({
     'string.base': `"phoneNumber" should be a type of 'text'`,
