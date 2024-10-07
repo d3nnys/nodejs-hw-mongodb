@@ -17,6 +17,7 @@ contactsRouter.get(
   '/',
   ctrlWrapper(contactController.getAllContactsController),
 );
+
 contactsRouter.get(
   '/:id',
   isValidId,
@@ -35,6 +36,7 @@ contactsRouter.put(
   validateBody(contactAddSchema),
   ctrlWrapper(contactController.upsertContactController),
 );
+
 contactsRouter.patch(
   '/:id',
   isValidId,

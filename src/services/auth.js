@@ -47,7 +47,7 @@ export const login = async (payload) => {
     throw createHttpError(401, 'Email or password invalid');
   }
 
-  const passwordCompare = await bcrypt.compare(password, password.user);
+  const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw createHttpError(401, 'Email or password invalid');
   }
@@ -65,17 +65,17 @@ export const login = async (payload) => {
 };
 
 export const refreshSession = async ({ refreshToken, sessionId }) => {
-  const oldSession = SessionCollection.findOne({
+  const oldSession = await SessionCollection.findOne({
     _id: sessionId,
     refreshToken,
   });
 
   if (!oldSession) {
-    throw createHttpError(409, 'Session not found');
+    throw createHttpError(401, 'Session not found');
   }
 
   if (new Date() > oldSession.refreshTokenValidUntil) {
-    throw createHttpError(409, 'Session token expired');
+    throw createHttpError(401, 'Session token expired');
   }
 
   await SessionCollection.deleteOne({ _id: sessionId });
