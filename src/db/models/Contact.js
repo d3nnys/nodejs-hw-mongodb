@@ -14,7 +14,7 @@ const contactSchema = new Schema(
     email: {
       type: String,
     },
-    isFavorite: {
+    isFavourite: {
       type: Boolean,
       default: false,
     },
@@ -23,6 +23,11 @@ const contactSchema = new Schema(
       enum: contactTypeList,
       required: true,
       default: 'personal',
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
     },
   },
   { versionKey: false, timestamps: true },
@@ -34,10 +39,11 @@ export const sortFields = [
   'name',
   'phoneNumber',
   'email',
-  'isFavorite',
+  'isFavourite',
   'contactType',
   'createdAt',
   'updatedAt',
+  'userId',
 ];
 
 export default ContactCollection;
