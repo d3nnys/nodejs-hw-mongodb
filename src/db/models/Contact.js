@@ -46,7 +46,6 @@ export const sortFields = [
   'contactType',
   'createdAt',
   'updatedAt',
-  'userId',
 ];
 
 export default ContactCollection;

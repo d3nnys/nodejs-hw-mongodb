@@ -36,8 +36,9 @@ export const register = async (payload) => {
     ...payload,
     password: hashPassword,
   });
+  delete data._doc.password;
 
-  return data;
+  return data._doc;
 };
 
 export const login = async (payload) => {
