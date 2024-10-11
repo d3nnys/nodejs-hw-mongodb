@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { userRegisterSchema, userLoginSchema } from '../validation/user.js';
 import {
-  requestResetEmailSchema,
+  sendResetEmailSchema,
   resetPasswordSchema,
 } from '../validation/auth.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
@@ -27,13 +27,13 @@ authRouter.post('/refresh', ctrlWrapper(authControllers.refreshController));
 authRouter.post('/logout', ctrlWrapper(authControllers.logoutController));
 
 authRouter.post(
-  '/request-reset-email',
-  validateBody(requestResetEmailSchema),
-  ctrlWrapper(authControllers.requestResetEmailController),
+  '/send-reset-email',
+  validateBody(sendResetEmailSchema),
+  ctrlWrapper(authControllers.sendResetEmailController),
 );
 
 authRouter.post(
-  '/reset-password',
+  '/reset-pwd',
   validateBody(resetPasswordSchema),
   ctrlWrapper(authControllers.resetPasswordController),
 );
