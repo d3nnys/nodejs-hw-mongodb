@@ -3,6 +3,7 @@ import {
   contactAddSchema,
   contactPatchSchema,
 } from '../validation/contacts.js';
+import { upload } from '../middlewares/multer.js';
 import * as contactController from '../controllers/contacts.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 import validateBody from '../utils/validateBody.js';
@@ -26,6 +27,7 @@ contactsRouter.get(
 
 contactsRouter.post(
   '/',
+  upload.single('photo'),
   validateBody(contactAddSchema),
   ctrlWrapper(contactController.addContactController),
 );
@@ -33,6 +35,7 @@ contactsRouter.post(
 contactsRouter.put(
   '/:id',
   isValidId,
+  upload.single('photo'),
   validateBody(contactAddSchema),
   ctrlWrapper(contactController.upsertContactController),
 );
@@ -40,6 +43,7 @@ contactsRouter.put(
 contactsRouter.patch(
   '/:id',
   isValidId,
+  upload.single('photo'),
   validateBody(contactPatchSchema),
   ctrlWrapper(contactController.patchContactController),
 );
