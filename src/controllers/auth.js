@@ -67,10 +67,8 @@ export const logoutController = async (req, res) => {
 };
 
 export const sendResetEmailController = async (req, res) => {
-  await authServices.sendResetToken(req.body.email);
+  await authServices.requestResetToken(req.body.email);
 
-  //"User not found!"
-  //"Failed to send the email, please try again later."
   res.json({
     status: 200,
     message: 'Reset password email has been successfully sent.',
