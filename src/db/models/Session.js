@@ -3,7 +3,8 @@ import { handleSaveError } from './hooks.js';
 
 const sessionSchema = new Schema({
   userId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'user',
     required: true,
   },
   accessToken: {

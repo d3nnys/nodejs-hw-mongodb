@@ -1,19 +1,25 @@
 import { contactAddSchema } from '../validation/contacts.js';
 import { sortFields } from '../db/models/Contact.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import createHttpError from 'http-errors';
 import * as contactServices from '../services/contacts.js';
 import parsePaginationParams from '../utils/parsePaginationParams.js';
 import parseSortParams from '../utils/parseSortParams.js';
 
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { env } from '../utils/env.js';
+
 export const getAllContactsController = async (req, res) => {
   const { perPage, page } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams({ ...req.query, sortFields });
+  const { _id: userId } = req.user;
 
   const data = await contactServices.getAllContacts({
     perPage,
     page,
     sortBy,
     sortOrder,
+    userId,
   });
 
   res.json({
@@ -26,7 +32,7 @@ export const getAllContactsController = async (req, res) => {
 export const getContactByIdController = async (req, res) => {
   const { id } = req.params;
   const { _id: userId } = req.user;
-  const data = await contactServices.getContactById({ _id: id, userId });
+  const data = await contactServices.getContact({ _id: id, userId });
 
   if (!data) throw createHttpError(404, `Contact not found`);
 
@@ -38,16 +44,17 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const addContactController = async (req, res) => {
-  // try {
-  //   await contactAddSchema.validateAsync(req.body, {
-  //     abortEarly: false,
-  //   });
-  //   console.log('Validation success');
-  // } catch (error) {
-  //   console.log(error.message);
-  // }
+  try {
+    await contactAddSchema.validateAsync(req.body, {
+      abortEarly: false,
+    });
+    console.log('Validation success');
+  } catch (error) {
+    console.log(error.message);
+  }
+
   const { _id: userId } = req.user;
-  const data = await contactServices.createContact(...req.body, userId);
+  const data = await contactServices.createContact({ ...req.body, userId });
 
   res.status(201).json({
     status: 201,
@@ -77,12 +84,30 @@ export const upsertContactController = async (req, res) => {
 export const patchContactController = async (req, res) => {
   const { id } = req.params;
   const { _id: userId } = req.user;
+  const photo = req.file;
+
+  let photoUrl;
+
+  if (photo) {
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
+
   const result = await contactServices.updateContact(
     { _id: id, userId },
-    req.body,
+    {
+      ...req.body,
+      photo: photoUrl,
+    },
   );
 
-  if (!result) throw createHttpError(404, `Contact not found`);
+  if (!result) {
+    next(createHttpError(404, `Contact not found`));
+    return;
+  }
 
   res.json({
     status: 200,

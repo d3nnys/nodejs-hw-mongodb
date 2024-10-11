@@ -30,6 +30,9 @@ const contactSchema = new Schema(
       ref: 'user',
       required: true,
     },
+    photo: {
+      type: String,
+    },
   },
   { versionKey: false, timestamps: true },
 );
@@ -46,7 +49,6 @@ export const sortFields = [
   'contactType',
   'createdAt',
   'updatedAt',
-  'userId',
 ];
 
 export default ContactCollection;
