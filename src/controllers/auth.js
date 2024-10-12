@@ -85,8 +85,6 @@ export const sendResetEmailController = async (req, res) => {
       data: {},
     });
   } catch (error) {
-    console.error('Error sending reset email:', error);
-
     res.status(500).json({
       status: 500,
       message: 'Failed to send reset email. Please try again later.',
