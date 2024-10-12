@@ -10,8 +10,8 @@ import {
 
 import { TEMPLATES_DIR } from '../constants/index.js';
 import handlebars from 'handlebars';
-import path from 'node:path';
-import fs from 'node:fs/promises';
+import * as path from 'node:path';
+import * as fs from 'node:fs/promises';
 
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
@@ -116,6 +116,7 @@ export const requestResetToken = async (email) => {
   if (!user) {
     throw createHttpError(404, 'User not found');
   }
+
   const resetToken = jwt.sign(
     {
       sub: user._id,
@@ -123,7 +124,7 @@ export const requestResetToken = async (email) => {
     },
     env('JWT_SECRET'),
     {
-      expiresIn: '15m',
+      expiresIn: '5m',
     },
   );
 
@@ -150,6 +151,7 @@ export const requestResetToken = async (email) => {
       html,
     });
   } catch (err) {
+    console.error('Error sending email:', err);
     throw createHttpError(
       500,
       'Failed to send the email, please try again later.',
