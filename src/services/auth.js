@@ -151,7 +151,6 @@ export const requestResetToken = async (email) => {
       html,
     });
   } catch (err) {
-    console.error('Error sending email:', err);
     throw createHttpError(
       500,
       'Failed to send the email, please try again later.',
