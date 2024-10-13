@@ -12,6 +12,7 @@ tags:
 servers:
   - url: http://localhost:3333
   - url: https://contacts-app-i7zf.onrender.com
+
 paths:
   /contacts:
     get:
