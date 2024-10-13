@@ -1,0 +1,56 @@
+tags:
+  - Contacts
+summary: Upsert a contact
+operationId: upsertContact
+description: Update an existing contact or insert a new one if it doesn't exist.
+security:
+  - BearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+    description: The ID of the contact to update.
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+          email:
+            type: string
+          phoneNumber:
+            type: string
+          isFavourite:
+            type: boolean
+          contactType:
+            type: string
+          photo:
+            type: string
+            format: binary
+responses:
+  '200':
+    description: Successfully upserted the contact.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+            message:
+              type: string
+            data:
+              $ref: '#/components/schemas/Contact'
+  '400':
+    description: Bad request.
+  '401':
+    description: Unauthorized.
+  '404':
+    description: Contact not found.
+  '500':
+    description: Internal server error.
