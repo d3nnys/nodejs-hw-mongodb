@@ -47,6 +47,7 @@ export const sortFields = [
   'email',
   'isFavourite',
   'contactType',
+  'photo',
   'createdAt',
   'updatedAt',
 ];
