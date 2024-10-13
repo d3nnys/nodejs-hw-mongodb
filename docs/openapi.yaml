@@ -11,7 +11,7 @@ tags:
     description: Operations with contacts
 servers:
   - url: http://localhost:3333
-  - url: 'link to the deployed site'
+  - url: https://contacts-app-i7zf.onrender.com
 paths:
   /contacts:
     get:
