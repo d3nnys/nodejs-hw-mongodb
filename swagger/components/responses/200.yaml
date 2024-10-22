@@ -1,0 +1,48 @@
+description: Successful response
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: 'Successfully found contacts!'
+        data:
+          type: object
+          description: The response data containing details of the contacts
+          properties:
+            _id:
+              type: string
+              example: '60c72b2f4f1a462f0a47b710'
+            name:
+              type: string
+              example: 'John Doe'
+            phoneNumber:
+              type: string
+              example: '+123456789'
+            email:
+              type: string
+              example: 'john.doe@example.com'
+            isFavourite:
+              type: boolean
+              example: true
+            contactType:
+              type: string
+              example: 'personal'
+            userId:
+              type: string
+              example: '60b72c1a6f0a461f3b2d1731'
+            photo:
+              type: string
+              example: 'https://example.com/photo.jpg'
+            createdAt:
+              type: string
+              format: date-time
+              example: '2024-09-07T15:24:00.000Z'
+            updatedAt:
+              type: string
+              format: date-time
+              example: '2024-09-07T15:24:00.000Z'
